@@ -1,8 +1,10 @@
 package com.edu.chalmers.ixdcth.envariant.androidudptest;
 
 import android.content.Intent;
+import android.os.Debug;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,16 +17,28 @@ import java.net.UnknownHostException;
 
 public class MainActivity extends ActionBarActivity {
 
+    private Thread thread;
+    private final String DEBUG_TAG = "DEBUG";
+    private MessageHandler messageHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        try {
-            MessageHandler messageHandler = new MessageHandler(0000, InetAddress.getLocalHost());
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+        thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    messageHandler = new MessageHandler(5555, InetAddress.getLocalHost());
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        thread.start();
+
         initButtons();
     }
 
@@ -36,6 +50,7 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 //TODO send message
                 Toast.makeText(getApplicationContext(), "Playing video 1", Toast.LENGTH_SHORT).show();
+                messageHandler.sendMessage("hej");
             }
         });
 
