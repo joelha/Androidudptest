@@ -18,28 +18,23 @@ import java.net.UnknownHostException;
 public class MainActivity extends ActionBarActivity {
 
     private Thread thread;
-    private final String DEBUG_TAG = "DEBUG";
-    private MessageHandler messageHandler;
+    private static final String DEBUG_TAG = "DEBUG";
+    private static final String PORT = "host";
+    private static final String HOST = "port";
+    private static final String ADRESSES = "addresses";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        thread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    messageHandler = new MessageHandler(5555, InetAddress.getLocalHost());
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        };
-        thread.start();
-
         initButtons();
+
+        String host = getSharedPreferences(ADRESSES, MODE_PRIVATE).getString(HOST, "");
+        int port = Integer.parseInt(getSharedPreferences(ADRESSES, MODE_PRIVATE).getString(PORT, ""));
+
+        MessageHandler handler = MessageHandler.getInstance();
+        handler.setHost(host);
+        handler.setPort(port);
     }
 
     private void initButtons() {
@@ -50,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 //TODO send message
                 Toast.makeText(getApplicationContext(), "Playing video 1", Toast.LENGTH_SHORT).show();
-                messageHandler.sendMessage("hej");
+                MessageHandler.getInstance().sendMessage("start video1");
             }
         });
 
@@ -61,6 +56,7 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 //TODO send message
                 Toast.makeText(getApplicationContext(), "Playing video 2", Toast.LENGTH_SHORT).show();
+                MessageHandler.getInstance().sendMessage("start video2");
             }
         });
 
@@ -71,6 +67,7 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 //TODO send message
                 Toast.makeText(getApplicationContext(), "Playing video 3", Toast.LENGTH_SHORT).show();
+                MessageHandler.getInstance().sendMessage("start video3");
             }
         });
     }
