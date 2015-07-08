@@ -1,9 +1,13 @@
 package com.edu.chalmers.ixdcth.envariant.androidudptest;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 
 public class LoginActivity extends ActionBarActivity {
@@ -12,6 +16,23 @@ public class LoginActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+        Button okButton = (Button) findViewById(R.id.okButton);
+        okButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //TODO check password
+                boolean passwordOk = true;
+                if(passwordOk) {
+                    startActivity(new Intent(getApplicationContext(), AdminActivity.class));
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Wrong password", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override

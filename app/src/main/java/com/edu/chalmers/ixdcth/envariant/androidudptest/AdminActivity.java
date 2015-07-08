@@ -1,9 +1,13 @@
 package com.edu.chalmers.ixdcth.envariant.androidudptest;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 
 public class AdminActivity extends ActionBarActivity {
@@ -12,6 +16,16 @@ public class AdminActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+
+        Button saveButton = (Button) findViewById(R.id.saveButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //TODO store host and port in sharedpreferences
+                Toast.makeText(getApplicationContext(), "Host and port saved", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

@@ -12,10 +12,11 @@
     <string name="title_activity_admin">AdminActivity</string>
     <string name="host">Host:</string>
     <string name="port">Port:</string>
+    <string name="save">Save</string>
+
 
     <string name="title_activity_login">LoginActivity</string>
     <string name="password">Password:</string>
-
-
+    <string name="ok">OK</string>
 
 </resources>
