@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -17,6 +20,15 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        try {
+            MessageHandler messageHandler = new MessageHandler(0000, InetAddress.getLocalHost());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        initButtons();
+    }
+
+    private void initButtons() {
         Button video1Button = (Button) findViewById(R.id.button);
         video1Button.setOnClickListener(new View.OnClickListener() {
 
