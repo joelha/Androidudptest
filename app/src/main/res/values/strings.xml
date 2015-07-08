@@ -8,6 +8,14 @@
     <string name="video1">Video 1</string>
     <string name="video2">Video 2</string>
     <string name="video3">Video 3</string>
+
     <string name="title_activity_admin">AdminActivity</string>
+    <string name="host">Host:</string>
+    <string name="port">Port:</string>
+
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="password">Password:</string>
+
+
 
 </resources>
