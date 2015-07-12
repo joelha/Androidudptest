@@ -22,6 +22,8 @@ public class MainActivity extends ActionBarActivity {
     private static final String PORT = "host";
     private static final String HOST = "port";
     private static final String ADRESSES = "addresses";
+    private static final String END = "\n";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "Playing video 1", Toast.LENGTH_SHORT).show();
-                MessageHandler.getInstance().sendMessage("start video1");
+                MessageHandler.getInstance().sendMessage("start video1"+ END);
             }
         });
 
@@ -48,7 +50,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "Playing video 2", Toast.LENGTH_SHORT).show();
-                MessageHandler.getInstance().sendMessage("start video2");
+                MessageHandler.getInstance().sendMessage("start video2" + END);
             }
         });
 
@@ -58,7 +60,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "Playing video 3", Toast.LENGTH_SHORT).show();
-                MessageHandler.getInstance().sendMessage("start video3");
+                MessageHandler.getInstance().sendMessage("start video3" + END);
             }
         });
     }
