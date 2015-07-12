@@ -17,52 +17,21 @@ import java.net.UnknownHostException;
 
 public class MainActivity extends ActionBarActivity {
 
-    private Thread thread;
     private static final String DEBUG_TAG = "DEBUG";
+
+    //Strings for checking previously stored host and port values.
     private static final String PORT = "host";
     private static final String HOST = "port";
     private static final String ADRESSES = "addresses";
-    private static final String END = "\n";
 
+    //termination character for messages
+    private static final String END = "\n";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         loadAddresses();
-        initButtons();
-    }
-
-    private void initButtons() {
-        Button video1Button = (Button) findViewById(R.id.button);
-        video1Button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Playing video 1", Toast.LENGTH_SHORT).show();
-                MessageHandler.getInstance().sendMessage("start video1"+ END);
-            }
-        });
-
-        Button video2Button = (Button) findViewById(R.id.button2);
-        video2Button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Playing video 2", Toast.LENGTH_SHORT).show();
-                MessageHandler.getInstance().sendMessage("start video2" + END);
-            }
-        });
-
-        Button video3Button = (Button) findViewById(R.id.button3);
-        video3Button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Playing video 3", Toast.LENGTH_SHORT).show();
-                MessageHandler.getInstance().sendMessage("start video3" + END);
-            }
-        });
     }
 
     @Override
@@ -72,16 +41,83 @@ public class MainActivity extends ActionBarActivity {
         Log.d(DEBUG_TAG, "resume!");
     }
 
+    /**
+     * checks for previously stored host and port numbers in shared preferences,
+     * if found the handler gets uses these, otherwise host address is set to 127.0.0.1 and port to 5555.
+     */
     private void loadAddresses() {
-        String host = getSharedPreferences(ADRESSES, MODE_PRIVATE).getString(HOST, "localhost");
+        String host = getSharedPreferences(ADRESSES, MODE_PRIVATE).getString(HOST, "127.0.0.1");
         int port = Integer.parseInt(getSharedPreferences(ADRESSES, MODE_PRIVATE).getString(PORT, "5555"));
-
-        Log.d(DEBUG_TAG, "host: " + host);
-        Log.d(DEBUG_TAG, "port: " + port);
-
         MessageHandler handler = MessageHandler.getInstance();
         handler.setHost(host);
         handler.setPort(port);
+    }
+
+    public void onClickVideo1(View view) {
+        Toast.makeText(getApplicationContext(), "Playing video 1", Toast.LENGTH_SHORT).show();
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    //example sequence
+                    MessageHandler.getInstance().sendMessage("start video1" + END);
+                    sleep(500);
+                    MessageHandler.getInstance().sendMessage("stop video1" + END);
+                    MessageHandler.getInstance().sendMessage("start video2" + END);
+                    sleep(1200);
+                    MessageHandler.getInstance().sendMessage("start fade" + END);
+                    sleep(200);
+                    MessageHandler.getInstance().sendMessage("stop fade" + END);
+                    MessageHandler.getInstance().sendMessage("start video2" + END);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    public void onClickVideo2(View view) {
+        Toast.makeText(getApplicationContext(), "Playing video 2", Toast.LENGTH_SHORT).show();
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    //example sequence
+                    MessageHandler.getInstance().sendMessage("start video2" + END);
+                    sleep(500);
+                    MessageHandler.getInstance().sendMessage("start fade" + END);
+                    sleep(1200);
+                    MessageHandler.getInstance().sendMessage("stop fade" + END);
+                    sleep(200);
+                    MessageHandler.getInstance().sendMessage("start fade" + END);
+                    sleep(1200);
+                    MessageHandler.getInstance().sendMessage("stop fade" + END);
+                    MessageHandler.getInstance().sendMessage("stop video2" + END);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    public void onClickVideo3(View view) {
+        Toast.makeText(getApplicationContext(), "Playing video 3", Toast.LENGTH_SHORT).show();
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    //example sequence
+                    MessageHandler.getInstance().sendMessage("start video3" + END);
+                    sleep(500);
+                    MessageHandler.getInstance().sendMessage("start fade" + END);
+                    sleep(1000);
+                    MessageHandler.getInstance().sendMessage("stop fade" + END);
+                    MessageHandler.getInstance().sendMessage("stop video3" + END);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     @Override
@@ -93,12 +129,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_admin) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);

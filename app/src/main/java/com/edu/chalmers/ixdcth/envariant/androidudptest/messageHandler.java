@@ -40,7 +40,8 @@ public class MessageHandler {
                 @Override
                 public void run() {
                     try {
-                        host = InetAddress.getByName("localhost");
+                        //sets a default address
+                        host = InetAddress.getByName("127.0.0.1");
                     } catch (UnknownHostException e) {
                         e.printStackTrace();
                     }
@@ -57,14 +58,20 @@ public class MessageHandler {
         }
     }
 
+    /**
+     *  Used when changing the port number, reinitializes the DatagramSocket if new port number.
+     */
     public void setPort(int portNo) {
         if(port != portNo) {
             port = portNo;
-            //datagramSocket.close();
             init();
         }
     }
 
+    /**
+     * Used when changing the host address, reinitializes the DatagramSocket if new host address.
+     * @param address
+     */
     public void setHost(String address) {
         final String adr = address;
         new Thread() {
@@ -73,7 +80,6 @@ public class MessageHandler {
                 try {
                     if (!host.equals(InetAddress.getByName(adr))) {
                         host = InetAddress.getByName(adr);
-                        //datagramSocket.close();
                         init();
                     }
                 } catch (UnknownHostException e) {
@@ -83,6 +89,11 @@ public class MessageHandler {
         }.start();
     }
 
+    /**
+     * Used in MainActivity to send simple string messages. Creates a packet holding the message and
+     * sends it to the host address and port number.
+     * @param message
+     */
     public void sendMessage(String message) {
         final String msg = message;
         new Thread() {
@@ -94,7 +105,6 @@ public class MessageHandler {
                     Log.d(DEBUG_TAG, "sent packet");
                     Log.d(DEBUG_TAG, "host: " + host);
                     Log.d(DEBUG_TAG, "port: " + port);
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

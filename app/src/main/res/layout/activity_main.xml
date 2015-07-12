@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="126dp"
-        android:text="@string/video1" />
+        android:text="@string/video1"
+        android:onClick="onClickVideo1"/>
 
     <Button
         android:id="@+id/button2"
@@ -19,7 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="44dp"
-        android:text="@string/video2" />
+        android:text="@string/video2"
+        android:onClick="onClickVideo2"/>
 
     <Button
         android:id="@+id/button3"
@@ -27,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="46dp"
-        android:text="@string/video3" />
+        android:text="@string/video3"
+        android:onClick="onClickVideo3"/>
 
 </LinearLayout>
