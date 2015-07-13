@@ -5,15 +5,20 @@
     <string name="action_settings">Settings</string>
     <string name="action_admin">Administrator</string>
 
-    <string name="video1">Video sequence 1</string>
-    <string name="video2">Video sequence 2</string>
-    <string name="video3">Video sequence 3</string>
+    <string name="start_video1">Start video 1</string>
+    <string name="start_video2">Start video 2</string>
+    <string name="start_video3">Start video 3</string>
+    <string name="stop_video1">Stop video 1</string>
+    <string name="stop_video2">Stop video 2</string>
+    <string name="stop_video3">Stop video 3</string>
+    <string name="start_fade">Start fade</string>
+    <string name="stop_fade">Stop fade</string>
+    <string name="delay">Delay:</string>
 
     <string name="title_activity_admin">AdminActivity</string>
     <string name="host">Host:</string>
     <string name="port">Port:</string>
     <string name="save">Save</string>
-
 
     <string name="title_activity_login">LoginActivity</string>
     <string name="password">Password:</string>
